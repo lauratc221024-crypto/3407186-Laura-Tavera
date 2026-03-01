@@ -1,344 +1,134 @@
-# 📦 Proyecto Semana 03: Sistema de Gestión con POO
+# 📦 Sistema de Gestión | Dominio: Agricultura
 
-> **🎯 ÚNICO ENTREGABLE**: Este proyecto es el **único entregable obligatorio** para aprobar la semana.
+## 📝 Descripción del Proyecto
 
-## 🏛️ Política de Dominios Únicos
+Este proyecto es un **sistema de gestión de elementos y usuarios** utilizando **Programación Orientada a Objetos (POO)** en **JavaScript moderno (ES2023)**.  
+Está adaptado al dominio de **agricultura**, permitiendo:
 
-**Tu dominio fue asignado por el instructor al inicio del trimestre.** Este proyecto debe implementarse completamente dentro del contexto de tu dominio asignado.
+- Registrar **cultivos** de diferentes tipos.
+- Administrar **usuarios** con distintos roles.
+- Filtrar y buscar elementos y usuarios.
+- Mostrar estadísticas del sistema.
+- Registrar transacciones (por ejemplo, movimiento de cultivos o actividades de usuarios).
 
-### ¿Por qué dominios únicos?
-
-- Previene copia entre compañeros
-- Fomenta implementaciones originales
-- Desarrolla capacidad de abstracción
-- Aplica conceptos de POO a contextos específicos
-
----
-
-## 🎯 Objetivo
-
-Crear un sistema completo de gestión usando clases ES2023, herencia, encapsulación y todos los conceptos de POO aprendidos durante la semana, aplicado a tu dominio asignado.
+Se estructura en **clases base y derivadas**, con **encapsulación**, **herencia**, **getters/setters**, **métodos estáticos** y **static blocks**.
 
 ---
 
-## 📋 Descripción
-
-Desarrollarás una aplicación web que permita gestionar entidades de tu dominio con:
-
-- Catálogo de elementos (con diferentes tipos/subclases)
-- Sistema de usuarios (diferentes roles)
-- Operaciones CRUD con validación
-- Sistema de estados y transiciones
-- Búsqueda y filtrado
+## 🏗 Estructura del Proyecto
 
 ---
 
-## 🏗️ Arquitectura de Clases (Genérica)
+## 🧩 Clases Principales
 
-Debes adaptar esta estructura a tu dominio:
+### 1️⃣ BaseItem
+- Clase base para todos los elementos (cultivos).
+- Campos privados: `id`, `name`, `location`, `active`, `dateCreated`.
+- Métodos:
+  - `activate() / deactivate()`
+  - `getInfo()`
+  - `getType()`
 
-```
-BaseItem (clase base abstracta)
-├── ItemType1
-├── ItemType2
-└── ItemType3
+### 2️⃣ Clases Derivadas
+- `ItemType1`, `ItemType2`, `ItemType3`
+- Cada clase tiene **propiedades privadas adicionales**.
+- Sobrescriben `getInfo()` para mostrar datos completos.
 
-Person (clase base)
-├── UserRole1
-└── UserRole2
+### 3️⃣ Person
+- Clase base para usuarios.
+- Campos privados: `id`, `name`, `email`, `registrationDate`.
+- Métodos:
+  - Validación de email
+  - `getInfo()`
 
-MainSystem (clase principal)
-├── Transaction (operaciones)
-└── Record (historial)
-```
+### 4️⃣ Roles de Usuario
+- `UserRole1` y `UserRole2`
+- Cada rol puede tener propiedades específicas (por ejemplo, especialidad, permisos, historial de actividades).
 
-### 💡 Ejemplo: Planetario (NO es un dominio asignable)
-
-```
-CelestialBody (clase base abstracta)
-├── Planet
-├── Star
-└── Satellite
-    ├── NaturalSatellite
-    └── ArtificialSatellite
-
-Person (clase base)
-├── Visitor
-└── Astronomer
-
-Observatory (clase principal)
-├── Observation (observaciones)
-└── Event (eventos astronómicos)
-```
+### 5️⃣ MainSystem
+- Clase principal que gestiona **items**, **usuarios** y **transacciones**.
+- Características:
+  - `static blocks` para configuración inicial
+  - Métodos CRUD (`addItem`, `removeItem`, `findItem`, `addUser`, etc.)
+  - Filtrado y búsqueda (`searchByName`, `filterByType`, `filterByStatus`)
+  - Estadísticas (`getStats`)
+  - IDs únicos generados con `crypto.randomUUID()`
 
 ---
 
-## 📝 Requisitos Técnicos
+## 🖥 Funcionalidades de la Interfaz
 
-### 1. Clase Base `BaseItem` (Abstracta)
+1. **Catálogo de elementos**  
+   - Visualiza todos los cultivos.
+   - Filtros por tipo y estado.
+   - Búsqueda por nombre.
+   - Botón “Agregar” para nuevos cultivos.
+   - Activar/Desactivar elementos.
+   - Eliminar elementos.
 
-Tu clase base debe incluir:
+2. **Usuarios**
+   - Registro de nuevos usuarios con rol.
+   - Búsqueda por nombre/email.
+   - Filtrado por rol.
 
-```javascript
-class BaseItem {
-  // Campos privados obligatorios
-  #id;
-  #name;
-  #active;
-  #location;
-  #dateCreated;
+3. **Transacciones**
+   - Historial de movimientos o acciones del sistema.
+   - Se actualiza al agregar/editar/eliminar elementos o usuarios.
 
-  constructor(name, location) { /* ... */ }
-
-  // Getters obligatorios
-  get id() { /* ... */ }
-  get name() { /* ... */ }
-  get isActive() { /* ... */ }
-  get location() { /* ... */ }
-  get dateCreated() { /* ... */ }
-
-  // Setter con validación
-  set location(value) { /* validar y asignar */ }
-
-  // Métodos de estado
-  activate() { /* ... */ }
-  deactivate() { /* ... */ }
-
-  // Método abstracto - debe sobrescribirse
-  getInfo() {
-    throw new Error('Método getInfo() debe ser implementado');
-  }
-
-  // Método para obtener el tipo
-  getType() {
-    return this.constructor.name;
-  }
-}
-```
-
-### 2. Clases Derivadas (mínimo 3)
-
-Crea al menos 3 clases que extiendan tu clase base:
-
-- Propiedades privadas adicionales específicas
-- Implementación del método `getInfo()`
-- Getters para todas las propiedades
-- Métodos específicos del tipo
-
-### 3. Clase `Person` (Base para usuarios)
-
-```javascript
-class Person {
-  #id;
-  #name;
-  #email;
-  #registrationDate;
-
-  constructor(name, email) { /* ... */ }
-
-  get id() { /* ... */ }
-  get name() { /* ... */ }
-  get email() { /* ... */ }
-
-  set email(value) { /* validar formato */ }
-}
-```
-
-### 4. Clases de Roles (mínimo 2)
-
-- Diferentes permisos/capacidades
-- Métodos específicos del rol
-- Propiedades privadas adicionales
-
-### 5. Clase Principal del Sistema
-
-```javascript
-class MainSystem {
-  #items = [];
-  #users = [];
-  #transactions = [];
-
-  // Bloque estático para configuración
-  static {
-    this.VERSION = '1.0.0';
-    this.MAX_ITEMS = 1000;
-  }
-
-  // Métodos CRUD
-  addItem(item) { /* ... */ }
-  removeItem(id) { /* ... */ }
-  findItem(id) { /* ... */ }
-
-  // Métodos de búsqueda
-  searchByName(query) { /* ... */ }
-  filterByType(type) { /* ... */ }
-
-  // Estadísticas
-  getStats() { /* ... */ }
-}
-```
+4. **Estadísticas**
+   - Total de elementos y usuarios.
+   - Activos / Inactivos.
+   - Detalle por tipo de elemento.
 
 ---
 
-## 💡 Ejemplos de Adaptación por Dominio
+## ⚙️ Cómo Ejecutar
 
-| Concepto | Planetario 🔭 | Acuario 🐠 |
-|----------|---------------|------------|
-| **BaseItem** | CelestialBody | MarineSpecies |
-| **Tipo 1** | Planet | Fish |
-| **Tipo 2** | Star | Mammal |
-| **Tipo 3** | Satellite | Invertebrate |
-| **Rol 1** | Visitor | Guest |
-| **Rol 2** | Astronomer | Biologist |
-| **Sistema** | Observatory | Aquarium |
-| **Transacción** | Observation | Feeding |
+1. Clonar o descargar el repositorio.
+2. Abrir `index.html` en un navegador moderno.
+3. Interactuar con el sistema:
+   - Usar el **botón + Agregar** para nuevos elementos o usuarios.
+   - Cambiar entre pestañas (Catálogo, Usuarios, Transacciones, Estadísticas).
+   - Aplicar filtros y búsquedas.
+4. Todos los cambios se manejan **en memoria** (no persistentes en base de datos).
 
 ---
 
-## 🎨 Interfaz de Usuario
+## 💻 Tecnologías Utilizadas
 
-### Secciones Requeridas
-
-1. **Header**: Nombre del sistema y estadísticas
-2. **Formulario**: Crear/editar elementos
-3. **Lista de Elementos**: Con información según tipo
-4. **Filtros**: Por tipo, estado, búsqueda
-5. **Detalles**: Modal con información completa
-
-### Estados Visuales
-
-- Elementos activos/inactivos
-- Diferentes iconos por tipo
-- Badges de categoría
+- HTML5
+- CSS3
+- JavaScript ES2023
+  - Clases y herencia
+  - Campos privados (#)
+  - Getters y setters
+  - Métodos estáticos
+  - Static blocks
+- DOM Manipulation
 
 ---
 
-## ✅ Criterios de Evaluación
+## 📌 Notas Importantes
 
-### Clases y Herencia (40 puntos)
-
-- [ ] Clase base abstracta correcta (10pts)
-- [ ] Mínimo 3 clases derivadas (10pts)
-- [ ] Uso correcto de `extends` y `super` (10pts)
-- [ ] Métodos sobrescritos correctamente (10pts)
-
-### Encapsulación (30 puntos)
-
-- [ ] Campos privados `#` correctos (10pts)
-- [ ] Getters y setters apropiados (10pts)
-- [ ] Validación en setters (10pts)
-
-### Características Modernas (30 puntos)
-
-- [ ] Static blocks para configuración (10pts)
-- [ ] Métodos estáticos apropiados (10pts)
-- [ ] Integración con DOM funcional (10pts)
-
-**Total: 100 puntos**
-**Mínimo para aprobar: 70 puntos**
+- Adaptar nombres de clases y propiedades a tu **dominio específico**.
+- No se permite copiar la implementación de otros compañeros.
+- Todos los campos importantes están **privados** para garantizar **encapsulación**.
+- La interfaz es **responsive** y modular.
 
 ---
 
-## 🚀 Cómo Empezar
+## 🚀 Próximos Mejoras
 
-### 1. Define tu Jerarquía de Clases
-
-Dibuja primero tu arquitectura de clases adaptada a tu dominio.
-
-### 2. Implementa de Abajo hacia Arriba
-
-1. Clase base `BaseItem`
-2. Clases derivadas (tipos de elementos)
-3. Clase `Person`
-4. Clases de roles
-5. Clase principal del sistema
-6. Integración con DOM
-
-### 3. Prueba Incrementalmente
-
-Después de cada clase, crea instancias de prueba en la consola.
+- Persistencia de datos usando **LocalStorage o Base de Datos**.
+- Autenticación de usuarios.
+- Exportar informes de estadísticas y transacciones.
+- Gestión avanzada de roles y permisos.
 
 ---
 
-## 💡 Pistas y Consejos
+### 📝 Autor
 
-### Campos Privados
-
-```javascript
-class Example {
-  #privateField;
-
-  constructor(value) {
-    this.#privateField = value;
-  }
-
-  get privateField() {
-    return this.#privateField;
-  }
-}
-```
-
-### Herencia
-
-```javascript
-class Child extends Parent {
-  constructor(parentProp, childProp) {
-    super(parentProp); // Llamar al padre primero
-    this.#childProp = childProp;
-  }
-}
-```
-
-### Static Blocks
-
-```javascript
-class Config {
-  static {
-    this.settings = {
-      theme: 'dark',
-      language: 'es'
-    };
-  }
-}
-```
-
----
-
-## 🎓 Conceptos Aplicados
-
-| Concepto | Uso en el Proyecto |
-|----------|-------------------|
-| **Clases** | Definir entidades del dominio |
-| **Herencia** | Especializar tipos de elementos |
-| **Campos privados** | Encapsular datos sensibles |
-| **Getters/Setters** | Controlar acceso a propiedades |
-| **Métodos estáticos** | Utilidades y configuración |
-| **Static blocks** | Inicialización compleja |
-
----
-
-## ⏱️ Tiempo Estimado
-
-- **Definir arquitectura**: 30 minutos
-- **Clases base**: 1 hora
-- **Clases derivadas**: 1.5 horas
-- **Sistema principal**: 1 hora
-- **Integración DOM**: 1 hora
-
-**Total: ~5 horas**
-
----
-
-## 📋 Entregables
-
-1. **Código funcional** con jerarquía de clases completa
-2. **Diagrama de clases** (puede ser texto o imagen)
-3. **README personal** explicando tu implementación
-4. **Todo el código debe usar**:
-   - Nomenclatura técnica en inglés
-   - Comentarios en español
-   - Sintaxis ES2023 (campos privados `#`, static blocks)
-
----
-
-_Proyecto Week-03 - JavaScript Moderno Bootcamp_
+- Nombre: Laura Tavera
+- Curso: Técnico en Programación de Software – SENA  
+- Proyecto: Sistema de Gestión con POO  
+![alt text](image.png)
