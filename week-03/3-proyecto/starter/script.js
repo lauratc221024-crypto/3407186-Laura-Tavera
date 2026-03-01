@@ -1,355 +1,245 @@
 // ============================================
-// SISTEMA DE GESTIÓN DE CULTIVOS - script.js
+// SISTEMA DE TRAZABILIDAD AGRÍCOLA
 // ============================================
 
-// =======================
-// Clases Base y Derivadas
-// =======================
+// --------------------------------------------
+// REFERENCIAS AL DOM
+// --------------------------------------------
+const tabs = document.querySelectorAll(".tab-btn");
+const panels = document.querySelectorAll(".tab-panel");
 
-// Clase base abstracta
+const addItemBtn = document.getElementById("add-item-btn");
+const addUserBtn = document.getElementById("add-user-btn");
+
+const itemModal = document.getElementById("item-modal");
+const closeItemModalBtn = document.getElementById("close-modal");
+const cancelItemBtn = document.getElementById("cancel-btn");
+const itemForm = document.getElementById("item-form");
+
+const userModal = document.getElementById("user-modal");
+const closeUserModalBtn = document.getElementById("close-user-modal");
+const cancelUserBtn = document.getElementById("cancel-user-btn");
+const userForm = document.getElementById("user-form");
+
+const itemList = document.getElementById("item-list");
+const userList = document.getElementById("user-list");
+const searchInput = document.getElementById("search-input");
+const filterType = document.getElementById("filter-type");
+const filterStatus = document.getElementById("filter-status");
+
+const searchUsers = document.getElementById("search-users");
+const filterRole = document.getElementById("filter-role");
+
+const statTotal = document.getElementById("stat-total");
+const statActive = document.getElementById("stat-active");
+const statInactive = document.getElementById("stat-inactive");
+const statUsers = document.getElementById("stat-users");
+
+// --------------------------------------------
+// PESTAÑAS
+// --------------------------------------------
+tabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+    tabs.forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+    const target = tab.dataset.tab;
+    panels.forEach(p => p.classList.remove("active"));
+    document.getElementById(target).classList.add("active");
+  });
+});
+
+// --------------------------------------------
+// MODALES
+// --------------------------------------------
+const openModal = modal => modal.style.display = "block";
+const closeModal = modal => modal.style.display = "none";
+
+addItemBtn.addEventListener("click", () => openModal(itemModal));
+closeItemModalBtn.addEventListener("click", () => closeModal(itemModal));
+cancelItemBtn.addEventListener("click", () => closeModal(itemModal));
+
+addUserBtn.addEventListener("click", () => openModal(userModal));
+closeUserModalBtn.addEventListener("click", () => closeModal(userModal));
+cancelUserBtn.addEventListener("click", () => closeModal(userModal));
+
+// --------------------------------------------
+// CLASES DEL SISTEMA
+// --------------------------------------------
 class BaseItem {
-  #id;
-  #name;
-  #active;
-  #location;
-  #dateCreated;
-
-  constructor(name, location) {
+  #id; #name; #type; #location; #active; #dateCreated;
+  constructor(name, type, location){
     this.#id = crypto.randomUUID();
     this.#name = name;
+    this.#type = type;
     this.#location = location;
     this.#active = true;
     this.#dateCreated = new Date().toISOString();
   }
-
-  get id() { return this.#id; }
-  get name() { return this.#name; }
-  get location() { return this.#location; }
-  get isActive() { return this.#active; }
-  get dateCreated() { return this.#dateCreated; }
-
-  set location(value) {
-    if (!value || value.trim() === '') throw new Error("Ubicación no puede estar vacía");
-    this.#location = value.trim();
-  }
-
-  activate() {
-    if (this.#active) return { success: false, message: 'El cultivo ya está activo' };
-    this.#active = true;
-    return { success: true };
-  }
-
-  deactivate() {
-    if (!this.#active) return { success: false, message: 'El cultivo ya está inactivo' };
-    this.#active = false;
-    return { success: true };
-  }
-
-  getInfo() { throw new Error('getInfo() debe implementarse'); }
-  getType() { return this.constructor.name; }
-}
-
-// Clases derivadas
-class ItemType1 extends BaseItem {
-  #cropType;
-  #quantity;
-
-  constructor(name, location, cropType, quantity) {
-    super(name, location);
-    this.#cropType = cropType;
-    this.#quantity = quantity;
-  }
-
-  get cropType() { return this.#cropType; }
-  get quantity() { return this.#quantity; }
-
-  getInfo() {
+  get id(){ return this.#id; }
+  get name(){ return this.#name; }
+  get type(){ return this.#type; }
+  get location(){ return this.#location; }
+  get isActive(){ return this.#active; }
+  get dateCreated(){ return this.#dateCreated; }
+  activate(){ this.#active = true; }
+  deactivate(){ this.#active = false; }
+  getInfo(){ 
     return {
-      id: this.id,
-      name: this.name,
-      type: this.getType(),
-      location: this.location,
-      cropType: this.#cropType,
-      quantity: this.#quantity,
-      active: this.isActive
+      id:this.id, name:this.name, type:this.type, location:this.location, active:this.isActive
     };
   }
 }
 
-class ItemType2 extends BaseItem {
-  #cropType;
-  #area;
-
-  constructor(name, location, cropType, area) {
-    super(name, location);
-    this.#cropType = cropType;
-    this.#area = area;
-  }
-
-  get cropType() { return this.#cropType; }
-  get area() { return this.#area; }
-
-  getInfo() {
-    return {
-      id: this.id,
-      name: this.name,
-      type: this.getType(),
-      location: this.location,
-      cropType: this.#cropType,
-      area: this.#area,
-      active: this.isActive
-    };
-  }
-}
-
-class ItemType3 extends BaseItem {
-  #cropType;
-  #notes;
-
-  constructor(name, location, cropType, notes) {
-    super(name, location);
-    this.#cropType = cropType;
-    this.#notes = notes;
-  }
-
-  get cropType() { return this.#cropType; }
-  get notes() { return this.#notes; }
-
-  getInfo() {
-    return {
-      id: this.id,
-      name: this.name,
-      type: this.getType(),
-      location: this.location,
-      cropType: this.#cropType,
-      notes: this.#notes,
-      active: this.isActive
-    };
-  }
-}
-
-// =======================
-// Clase Person y Roles
-// =======================
 class Person {
-  #id;
-  #name;
-  #email;
-  #registrationDate;
-
-  constructor(name, email) {
+  #id; #name; #email; #role; #dateRegistered;
+  constructor(name,email,role){
     this.#id = crypto.randomUUID();
     this.#name = name;
     this.#email = email;
-    this.#registrationDate = new Date().toISOString();
+    this.#role = role;
+    this.#dateRegistered = new Date().toISOString();
   }
-
-  get id() { return this.#id; }
-  get name() { return this.#name; }
-  get email() { return this.#email; }
-  get registrationDate() { return this.#registrationDate; }
-
-  set email(value) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(value)) throw new Error('Email inválido');
-    this.#email = value;
-  }
-
-  getInfo() {
-    return {
-      id: this.id,
-      name: this.name,
-      email: this.email,
-      registrationDate: this.registrationDate
-    };
-  }
+  get id(){ return this.#id; }
+  get name(){ return this.#name; }
+  get email(){ return this.#email; }
+  get role(){ return this.#role; }
+  get dateRegistered(){ return this.#dateRegistered; }
+  getInfo(){ return {id:this.id,name:this.name,email:this.email,role:this.role,dateRegistered:this.dateRegistered}; }
 }
 
-// Roles de usuario
-class UserRole1 extends Person {
-  #roleName = 'Rol 1';
-  get role() { return this.#roleName; }
-}
+// --------------------------------------------
+// SISTEMA
+// --------------------------------------------
+const system = {
+  items: [],
+  users: []
+};
 
-class UserRole2 extends Person {
-  #roleName = 'Rol 2';
-  get role() { return this.#roleName; }
-}
-
-// =======================
-// Sistema Principal
-// =======================
-class MainSystem {
-  #items = [];
-  #users = [];
-
-  static {
-    this.VERSION = '1.0.0';
-    this.MAX_ITEMS = 1000;
-    this.SYSTEM_NAME = 'Sistema de Cultivos';
+// --------------------------------------------
+// RENDER ITEMS
+// --------------------------------------------
+function renderItems(items = system.items){
+  if(items.length===0){
+    itemList.innerHTML = '<p>No hay cultivos agregados</p>';
+    return;
   }
-
-  addItem(item) {
-    if (!(item instanceof BaseItem)) return { success: false, message: 'Debe ser un BaseItem' };
-    this.#items.push(item);
-    return { success: true, item };
-  }
-
-  removeItem(id) {
-    const index = this.#items.findIndex(i => i.id === id);
-    if (index === -1) return { success: false };
-    const removed = this.#items.splice(index, 1)[0];
-    return { success: true, item: removed };
-  }
-
-  findItem(id) { return this.#items.find(i => i.id === id) ?? null; }
-  getAllItems() { return [...this.#items]; }
-
-  addUser(user) {
-    if (!(user instanceof Person)) return { success: false };
-    this.#users.push(user);
-    return { success: true, user };
-  }
-  getAllUsers() { return [...this.#users]; }
-  findUserByEmail(email) { return this.#users.find(u => u.email === email) ?? null; }
-  getStats() {
-    const total = this.#items.length;
-    const active = this.#items.filter(i => i.isActive).length;
-    return {
-      total,
-      active,
-      inactive: total - active,
-      users: this.#users.length
-    };
-  }
-}
-
-// =======================
-// Instancia del Sistema
-// =======================
-const system = new MainSystem();
-
-// =======================
-// DOM Elements
-// =======================
-const itemList = document.getElementById('item-list');
-const addItemBtn = document.getElementById('add-item-btn');
-const itemModal = document.getElementById('item-modal');
-const closeModalBtn = document.getElementById('close-modal');
-const itemForm = document.getElementById('item-form');
-
-const userList = document.getElementById('user-list');
-const addUserBtn = document.getElementById('add-user-btn');
-const userModal = document.getElementById('user-modal');
-const closeUserModalBtn = document.getElementById('close-user-modal');
-const userForm = document.getElementById('user-form');
-
-const statTotal = document.getElementById('stat-total');
-const statActive = document.getElementById('stat-active');
-const statInactive = document.getElementById('stat-inactive');
-const statUsers = document.getElementById('stat-users');
-
-// =======================
-// Funciones Render
-// =======================
-function renderItems() {
-  const items = system.getAllItems();
   itemList.innerHTML = items.map(item => `
-    <div class="item" data-id="${item.id}">
-      <strong>${item.name}</strong> | ${item.getType()} | ${item.location} |
-      ${item.isActive ? 'Activo' : 'Inactivo'}
-      <button class="btn-toggle">Toggle</button>
-      <button class="btn-delete">Eliminar</button>
+    <div class="item ${item.isActive?'':'inactive'}" data-id="${item.id}">
+      <h4>${item.name}</h4>
+      <p>Tipo: ${item.type}</p>
+      <p>Ubicación: ${item.location}</p>
+      <p>Estado: ${item.isActive?'Activo':'Inactivo'}</p>
+      <button class="btn-toggle" data-id="${item.id}">${item.isActive?'Desactivar':'Activar'}</button>
+      <button class="btn-delete" data-id="${item.id}">Eliminar</button>
     </div>
   `).join('');
+}
+
+// --------------------------------------------
+// RENDER USERS
+// --------------------------------------------
+function renderUsers(usersArr = system.users){
+  if(usersArr.length===0){
+    userList.innerHTML = '<p>No hay usuarios registrados</p>';
+    return;
+  }
+  userList.innerHTML = usersArr.map(user => `
+    <div class="user" data-id="${user.id}">
+      <h4>${user.name}</h4>
+      <p>Rol: ${user.role}</p>
+      <p>Email: ${user.email}</p>
+    </div>
+  `).join('');
+}
+
+// --------------------------------------------
+// ESTADÍSTICAS
+// --------------------------------------------
+function renderStats(){
+  statTotal.textContent = system.items.length;
+  statActive.textContent = system.items.filter(i=>i.isActive).length;
+  statInactive.textContent = system.items.filter(i=>!i.isActive).length;
+  statUsers.textContent = system.users.length;
+}
+
+// --------------------------------------------
+// FORMULARIOS
+// --------------------------------------------
+itemForm.addEventListener("submit", e=>{
+  e.preventDefault();
+  const name = document.getElementById("item-name").value;
+  const type = document.getElementById("item-type").value;
+  const location = document.getElementById("item-location").value;
+  const newItem = new BaseItem(name,type,location);
+  system.items.push(newItem);
+  renderItems();
   renderStats();
-}
+  itemForm.reset();
+  closeModal(itemModal);
+});
 
-function renderUsers() {
-  const users = system.getAllUsers();
-  userList.innerHTML = users.map(u => `
-    <div class="user">
-      <strong>${u.name}</strong> | ${u.email} | ${u.role ?? 'N/A'}
-    </div>
-  `).join('');
-}
-
-function renderStats() {
-  const stats = system.getStats();
-  statTotal.textContent = stats.total;
-  statActive.textContent = stats.active;
-  statInactive.textContent = stats.inactive;
-  statUsers.textContent = stats.users;
-}
-
-// =======================
-// Eventos Botones
-// =======================
-
-// Mostrar modales
-addItemBtn.addEventListener('click', () => itemModal.style.display = 'block');
-closeModalBtn.addEventListener('click', () => itemModal.style.display = 'none');
-
-addUserBtn.addEventListener('click', () => userModal.style.display = 'block');
-closeUserModalBtn.addEventListener('click', () => userModal.style.display = 'none');
-
-// Agregar Cultivo
-itemForm.addEventListener('submit', e => {
+userForm.addEventListener("submit", e=>{
   e.preventDefault();
-  const type = document.getElementById('item-type').value;
-  const name = document.getElementById('item-name').value;
-  const location = document.getElementById('item-location').value;
-  let newItem;
-
-  if (type === 'ItemType1') newItem = new ItemType1(name, location, 'Tipo1', 100);
-  else if (type === 'ItemType2') newItem = new ItemType2(name, location, 'Tipo2', 50);
-  else if (type === 'ItemType3') newItem = new ItemType3(name, location, 'Tipo3', 'Sin notas');
-
-  if (newItem) {
-    system.addItem(newItem);
-    renderItems();
-    itemModal.style.display = 'none';
-    itemForm.reset();
-  }
+  const name = document.getElementById("user-name").value;
+  const email = document.getElementById("user-email").value;
+  const role = document.getElementById("user-role").value;
+  const newUser = new Person(name,email,role);
+  system.users.push(newUser);
+  renderUsers();
+  renderStats();
+  userForm.reset();
+  closeModal(userModal);
 });
 
-// Agregar Usuario
-userForm.addEventListener('submit', e => {
-  e.preventDefault();
-  const role = document.getElementById('user-role').value;
-  const name = document.getElementById('user-name').value;
-  const email = document.getElementById('user-email').value;
-  let newUser;
-
-  if (role === 'UserRole1') newUser = new UserRole1(name, email);
-  else if (role === 'UserRole2') newUser = new UserRole2(name, email);
-
-  if (newUser) {
-    system.addUser(newUser);
-    renderUsers();
-    renderStats();
-    userModal.style.display = 'none';
-    userForm.reset();
-  }
+// --------------------------------------------
+// FILTROS Y BÚSQUEDA
+// --------------------------------------------
+searchInput.addEventListener("input", ()=>{
+  const q = searchInput.value.toLowerCase();
+  renderItems(system.items.filter(i=>i.name.toLowerCase().includes(q)));
 });
 
-// Toggle y Delete Items
-itemList.addEventListener('click', e => {
-  const id = e.target.closest('.item')?.dataset.id;
-  if (!id) return;
-  const item = system.findItem(id);
-  if (!item) return;
-
-  if (e.target.classList.contains('btn-toggle')) {
-    item.isActive ? item.deactivate() : item.activate();
-    renderItems();
-  }
-  if (e.target.classList.contains('btn-delete')) {
-    system.removeItem(id);
-    renderItems();
-  }
+filterType.addEventListener("change", ()=>{
+  const type = filterType.value;
+  renderItems(type==='all'?system.items:system.items.filter(i=>i.type===type));
 });
 
-// Inicializar render
+filterStatus.addEventListener("change", ()=>{
+  const status = filterStatus.value;
+  if(status==='all'){ renderItems(); return; }
+  renderItems(system.items.filter(i=>status==='active'?i.isActive:!i.isActive));
+});
+
+searchUsers.addEventListener("input", ()=>{
+  const q = searchUsers.value.toLowerCase();
+  renderUsers(system.users.filter(u=>u.name.toLowerCase().includes(q)));
+});
+
+filterRole.addEventListener("change", ()=>{
+  const role = filterRole.value;
+  renderUsers(role==='all'?system.users:system.users.filter(u=>u.role===role));
+});
+
+// --------------------------------------------
+// BOTONES DINÁMICOS ITEMS
+// --------------------------------------------
+itemList.addEventListener("click", e=>{
+  const id = e.target.dataset.id;
+  if(!id) return;
+  const item = system.items.find(i=>i.id===id);
+  if(e.target.classList.contains("btn-toggle")){
+    item.isActive?item.deactivate():item.activate();
+  }
+  if(e.target.classList.contains("btn-delete")){
+    system.items = system.items.filter(i=>i.id!==id);
+  }
+  renderItems();
+  renderStats();
+});
+
+// --------------------------------------------
+// INICIALIZAR
+// --------------------------------------------
 renderItems();
 renderUsers();
+renderStats();

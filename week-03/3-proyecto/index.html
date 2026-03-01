@@ -3,22 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>📦 Sistema de Gestión | Tu Dominio</title>
+    <title>🌱 Sistema de Gestión | Trazabilidad Agrícola</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div class="app-container">
       <!-- Header -->
       <header class="header">
-        <h1>📦 Sistema de Gestión</h1>
-        <p class="subtitle">Adaptado a tu dominio asignado</p>
+        <h1>🌱 Sistema de Trazabilidad Agrícola</h1>
+        <p class="subtitle">Gestión de cultivos, lotes y usuarios</p>
       </header>
 
       <!-- Navigation Tabs -->
       <nav class="tabs">
-        <button class="tab-btn active" data-tab="catalog">📋 Catálogo</button>
-        <button class="tab-btn" data-tab="users">👥 Usuarios</button>
-        <button class="tab-btn" data-tab="transactions">🔄 Transacciones</button>
+        <button class="tab-btn active" data-tab="catalog">🌾 Catálogo</button>
+        <button class="tab-btn" data-tab="users">👩‍🌾 Usuarios</button>
+        <button class="tab-btn" data-tab="transactions">🔄 Movimientos</button>
         <button class="tab-btn" data-tab="stats">📊 Estadísticas</button>
       </nav>
 
@@ -27,40 +27,40 @@
         <!-- Catalog Tab -->
         <section id="catalog" class="tab-panel active">
           <div class="panel-header">
-            <h2>📋 Catálogo de Elementos</h2>
+            <h2>🌾 Catálogo de Cultivos</h2>
             <div class="actions">
-              <input type="text" id="search-input" placeholder="Buscar por nombre..." />
+              <input type="text" id="search-input" placeholder="Buscar cultivo..." />
               <select id="filter-type">
                 <option value="all">Todos los tipos</option>
-                <option value="ItemType1">Tipo 1</option>
-                <option value="ItemType2">Tipo 2</option>
-                <option value="ItemType3">Tipo 3</option>
+                <option value="ItemType1">Hortalizas</option>
+                <option value="ItemType2">Frutales</option>
+                <option value="ItemType3">Cereales</option>
               </select>
               <select id="filter-status">
                 <option value="all">Todos</option>
                 <option value="active">Activos</option>
                 <option value="inactive">Inactivos</option>
               </select>
-              <button id="add-item-btn" class="btn btn-primary">+ Agregar</button>
+              <button id="add-item-btn" class="btn btn-primary">+ Agregar Cultivo</button>
             </div>
           </div>
           <div id="item-list" class="items-grid"></div>
           <div id="empty-state" class="empty-state" style="display: none;">
-            <p>📭 No hay elementos en el catálogo</p>
-            <p class="hint">Agrega tu primer elemento usando el botón superior</p>
+            <p>📭 No hay cultivos registrados</p>
+            <p class="hint">Agrega tu primer cultivo usando el botón superior</p>
           </div>
         </section>
 
         <!-- Users Tab -->
         <section id="users" class="tab-panel">
           <div class="panel-header">
-            <h2>👥 Usuarios del Sistema</h2>
+            <h2>👩‍🌾 Usuarios del Sistema</h2>
             <div class="actions">
               <input type="text" id="search-users" placeholder="Buscar usuario..." />
               <select id="filter-role">
                 <option value="all">Todos los roles</option>
-                <option value="UserRole1">Rol 1</option>
-                <option value="UserRole2">Rol 2</option>
+                <option value="UserRole1">Administrador</option>
+                <option value="UserRole2">Agrónomo</option>
               </select>
               <button id="add-user-btn" class="btn btn-primary">+ Agregar Usuario</button>
             </div>
@@ -71,7 +71,7 @@
         <!-- Transactions Tab -->
         <section id="transactions" class="tab-panel">
           <div class="panel-header">
-            <h2>🔄 Historial de Transacciones</h2>
+            <h2>🔄 Movimientos de Producción</h2>
           </div>
           <div id="transaction-list" class="transactions-list"></div>
         </section>
@@ -84,7 +84,7 @@
           <div id="stats-container" class="stats-grid">
             <div class="stat-card">
               <span class="stat-value" id="stat-total">0</span>
-              <span class="stat-label">Total Elementos</span>
+              <span class="stat-label">Total Cultivos</span>
             </div>
             <div class="stat-card">
               <span class="stat-value" id="stat-active">0</span>
@@ -103,21 +103,21 @@
         </section>
       </main>
 
-      <!-- Modal para agregar/editar elementos -->
+      <!-- Modales (Cultivos y Usuarios) -->
       <div id="item-modal" class="modal" style="display: none;">
         <div class="modal-content">
           <div class="modal-header">
-            <h3 id="modal-title">Agregar Elemento</h3>
+            <h3 id="modal-title">Agregar Cultivo</h3>
             <button class="close-btn" id="close-modal">&times;</button>
           </div>
           <form id="item-form" class="modal-form">
             <div class="form-group">
-              <label for="item-type">Tipo de Elemento</label>
+              <label for="item-type">Tipo de Cultivo</label>
               <select id="item-type" required>
                 <option value="">Selecciona un tipo</option>
-                <option value="ItemType1">Tipo 1</option>
-                <option value="ItemType2">Tipo 2</option>
-                <option value="ItemType3">Tipo 3</option>
+                <option value="ItemType1">Hortaliza</option>
+                <option value="ItemType2">Frutal</option>
+                <option value="ItemType3">Cereal</option>
               </select>
             </div>
             <div class="form-group">
@@ -137,7 +137,6 @@
         </div>
       </div>
 
-      <!-- Modal para agregar usuarios -->
       <div id="user-modal" class="modal" style="display: none;">
         <div class="modal-content">
           <div class="modal-header">
@@ -149,8 +148,8 @@
               <label for="user-role">Rol</label>
               <select id="user-role" required>
                 <option value="">Selecciona un rol</option>
-                <option value="UserRole1">Rol 1</option>
-                <option value="UserRole2">Rol 2</option>
+                <option value="UserRole1">Administrador</option>
+                <option value="UserRole2">Agrónomo</option>
               </select>
             </div>
             <div class="form-group">
@@ -170,25 +169,6 @@
       </div>
     </div>
 
-    <!-- Fix para pestañas -->
-    <script>
-      const tabButtons = document.querySelectorAll('.tab-btn');
-      const tabPanels = document.querySelectorAll('.tab-panel');
-
-      tabButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          tabButtons.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-
-          tabPanels.forEach(panel => panel.classList.remove('active'));
-          const target = btn.dataset.tab;
-          const activePanel = document.getElementById(target);
-          if (activePanel) activePanel.classList.add('active');
-        });
-      });
-    </script>
-
-    <!-- Script principal -->
     <script src="starter/script.js"></script>
   </body>
 </html>
