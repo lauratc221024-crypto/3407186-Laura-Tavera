@@ -3,8 +3,8 @@
    =================================== */
 
 :root {
-  --color-primary: #3b82f6;
-  --color-secondary: #8b5cf6;
+  --color-primary: #000000;
+  --color-secondary: #e2deeb;
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-danger: #ef4444;
@@ -34,7 +34,7 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #8eee87 0%, #ace467 100%);
   min-height: 100vh;
   padding: 2rem 1rem;
   color: var(--color-dark);
@@ -172,7 +172,7 @@ body {
 }
 
 .btn-primary:hover {
-  background: #2563eb;
+  background: #eb2581;
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
 }
@@ -241,7 +241,12 @@ body {
   border-radius: var(--radius-md);
   font-family: inherit;
 }
-
+#item-form input,
+#item-form select {
+    background-color: #f4c273;
+    border: 2px solid #ef6c00;
+    color: #4e342e;
+}
 .search-group input {
   width: 100%;
 }
