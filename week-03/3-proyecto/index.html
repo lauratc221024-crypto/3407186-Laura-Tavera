@@ -3,52 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- TODO: Cambia el título según tu dominio -->
     <title>📦 Sistema de Gestión | Tu Dominio</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <!--
-      ============================================
-      NOTA PARA EL APRENDIZ:
-      ============================================
-      Este HTML es una plantilla genérica.
-      Debes adaptarlo a tu dominio asignado:
-
-      1. Cambia todos los textos genéricos
-      2. Cambia las pestañas según tu sistema
-      3. Adapta los filtros a tu dominio
-      4. Cambia emojis para coherencia visual
-
-      EJEMPLO (Planetario - NO es un dominio asignable):
-      - Pestañas: Catálogo, Visitantes, Observaciones, Estadísticas
-      - Filtros: Tipo (Planeta/Estrella), Estado (Visible/No visible)
-      ============================================
-    -->
-
     <div class="app-container">
       <!-- Header -->
       <header class="header">
-        <!-- TODO: Cambia el título y emoji según tu dominio -->
         <h1>📦 Sistema de Gestión</h1>
         <p class="subtitle">Adaptado a tu dominio asignado</p>
       </header>
 
       <!-- Navigation Tabs -->
       <nav class="tabs">
-        <!-- TODO: Adapta las pestañas a tu dominio -->
-        <button class="tab-btn active" data-tab="catalog">
-          📋 Catálogo
-        </button>
-        <button class="tab-btn" data-tab="users">
-          👥 Usuarios
-        </button>
-        <button class="tab-btn" data-tab="transactions">
-          🔄 Transacciones
-        </button>
-        <button class="tab-btn" data-tab="stats">
-          📊 Estadísticas
-        </button>
+        <button class="tab-btn active" data-tab="catalog">📋 Catálogo</button>
+        <button class="tab-btn" data-tab="users">👥 Usuarios</button>
+        <button class="tab-btn" data-tab="transactions">🔄 Transacciones</button>
+        <button class="tab-btn" data-tab="stats">📊 Estadísticas</button>
       </nav>
 
       <!-- Tab Content -->
@@ -58,20 +29,9 @@
           <div class="panel-header">
             <h2>📋 Catálogo de Elementos</h2>
             <div class="actions">
-              <input
-                type="text"
-                id="search-input"
-                placeholder="Buscar por nombre..."
-              />
-              <!-- TODO: Adapta los tipos a tu dominio -->
+              <input type="text" id="search-input" placeholder="Buscar por nombre..." />
               <select id="filter-type">
                 <option value="all">Todos los tipos</option>
-                <!--
-                  EJEMPLO Planetario:
-                  <option value="Planet">Planetas</option>
-                  <option value="Star">Estrellas</option>
-                  <option value="Satellite">Satélites</option>
-                -->
                 <option value="ItemType1">Tipo 1</option>
                 <option value="ItemType2">Tipo 2</option>
                 <option value="ItemType3">Tipo 3</option>
@@ -81,14 +41,10 @@
                 <option value="active">Activos</option>
                 <option value="inactive">Inactivos</option>
               </select>
-              <button id="add-item-btn" class="btn btn-primary">
-                + Agregar
-              </button>
+              <button id="add-item-btn" class="btn btn-primary">+ Agregar</button>
             </div>
           </div>
-          <div id="item-list" class="items-grid">
-            <!-- Los elementos se renderizarán aquí con JavaScript -->
-          </div>
+          <div id="item-list" class="items-grid"></div>
           <div id="empty-state" class="empty-state" style="display: none;">
             <p>📭 No hay elementos en el catálogo</p>
             <p class="hint">Agrega tu primer elemento usando el botón superior</p>
@@ -100,36 +56,24 @@
           <div class="panel-header">
             <h2>👥 Usuarios del Sistema</h2>
             <div class="actions">
-              <input
-                type="text"
-                id="search-users"
-                placeholder="Buscar usuario..."
-              />
-              <!-- TODO: Adapta los roles a tu dominio -->
+              <input type="text" id="search-users" placeholder="Buscar usuario..." />
               <select id="filter-role">
                 <option value="all">Todos los roles</option>
                 <option value="UserRole1">Rol 1</option>
                 <option value="UserRole2">Rol 2</option>
               </select>
-              <button id="add-user-btn" class="btn btn-primary">
-                + Agregar Usuario
-              </button>
+              <button id="add-user-btn" class="btn btn-primary">+ Agregar Usuario</button>
             </div>
           </div>
-          <div id="user-list" class="users-grid">
-            <!-- Los usuarios se renderizarán aquí -->
-          </div>
+          <div id="user-list" class="users-grid"></div>
         </section>
 
         <!-- Transactions Tab -->
         <section id="transactions" class="tab-panel">
           <div class="panel-header">
-            <!-- TODO: Cambia "Transacciones" por el término de tu dominio -->
             <h2>🔄 Historial de Transacciones</h2>
           </div>
-          <div id="transaction-list" class="transactions-list">
-            <!-- Las transacciones se renderizarán aquí -->
-          </div>
+          <div id="transaction-list" class="transactions-list"></div>
         </section>
 
         <!-- Stats Tab -->
@@ -155,9 +99,7 @@
               <span class="stat-label">Usuarios</span>
             </div>
           </div>
-          <div id="stats-details" class="stats-details">
-            <!-- Estadísticas detalladas por tipo -->
-          </div>
+          <div id="stats-details" class="stats-details"></div>
         </section>
       </main>
 
@@ -169,42 +111,27 @@
             <button class="close-btn" id="close-modal">&times;</button>
           </div>
           <form id="item-form" class="modal-form">
-            <!-- Selector de tipo -->
             <div class="form-group">
               <label for="item-type">Tipo de Elemento</label>
               <select id="item-type" required>
-                <!-- TODO: Adapta los tipos a tu dominio -->
                 <option value="">Selecciona un tipo</option>
                 <option value="ItemType1">Tipo 1</option>
                 <option value="ItemType2">Tipo 2</option>
                 <option value="ItemType3">Tipo 3</option>
               </select>
             </div>
-
-            <!-- Campos base -->
             <div class="form-group">
               <label for="item-name">Nombre *</label>
               <input type="text" id="item-name" required />
             </div>
-
             <div class="form-group">
               <label for="item-location">Ubicación *</label>
               <input type="text" id="item-location" required />
             </div>
-
-            <!--
-              TODO: Agrega campos específicos según el tipo seleccionado
-              Puedes mostrar/ocultar campos dinámicamente con JavaScript
-            -->
-            <div id="dynamic-fields">
-              <!-- Campos dinámicos según el tipo -->
-            </div>
-
+            <div id="dynamic-fields"></div>
             <div class="form-actions">
               <button type="submit" class="btn btn-primary">Guardar</button>
-              <button type="button" class="btn btn-secondary" id="cancel-btn">
-                Cancelar
-              </button>
+              <button type="button" class="btn btn-secondary" id="cancel-btn">Cancelar</button>
             </div>
           </form>
         </div>
@@ -226,27 +153,40 @@
                 <option value="UserRole2">Rol 2</option>
               </select>
             </div>
-
             <div class="form-group">
               <label for="user-name">Nombre *</label>
               <input type="text" id="user-name" required />
             </div>
-
             <div class="form-group">
               <label for="user-email">Email *</label>
               <input type="email" id="user-email" required />
             </div>
-
             <div class="form-actions">
               <button type="submit" class="btn btn-primary">Guardar</button>
-              <button type="button" class="btn btn-secondary" id="cancel-user-btn">
-                Cancelar
-              </button>
+              <button type="button" class="btn btn-secondary" id="cancel-user-btn">Cancelar</button>
             </div>
           </form>
         </div>
       </div>
     </div>
+
+    <!-- Fix para pestañas -->
+    <script>
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const tabPanels = document.querySelectorAll('.tab-panel');
+
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          tabPanels.forEach(panel => panel.classList.remove('active'));
+          const target = btn.dataset.tab;
+          const activePanel = document.getElementById(target);
+          if (activePanel) activePanel.classList.add('active');
+        });
+      });
+    </script>
 
     <!-- Script principal -->
     <script src="starter/script.js"></script>
