@@ -8,7 +8,7 @@ Construir una **calculadora multi-operación** aplicada a tu dominio asignado, u
 
 ## 📋 Tu Dominio Asignado
 
-**Dominio**: [El instructor te asignará tu dominio al inicio del trimestre]
+**Dominio**: [sistema de trazabilidad agricola]
 
 Ejemplos de cómo adaptar una calculadora a un dominio (usando dominios NO asignables):
 
@@ -32,7 +32,33 @@ Tu calculadora debe incluir al menos:
    - Combinar condiciones (descuento si cumple criterios, etc.)
 5. **Numeric separators** para cantidades grandes (`1_000_000`)
 6. **`console.log()`** con resultados claros y etiquetados
+""
+=== Operaciones básicas ===
+Valor total del lote: 3000000
+Espacio restante: 4000
+Promedio por parcela: 200
+Kilos sobrantes: 0
 
+=== Asignación compuesta ===
+Ingreso después del primer lote: 3000000
+Ingreso después del segundo lote: 5500000
+Ingreso con descuento: 5225000
+
+=== Validaciones con === ===
+¿Lote registrado? true
+¿Producción alta? true
+
+=== Condiciones lógicas ===
+¿Puede exportarse? true
+¿Puede venderse? true
+¿No tiene certificación? false
+
+=== Resumen ===
+Producción del lote: 1000
+Valor del lote: 3000000
+Ingresos acumulados: 5225000
+Espacio disponible: 4000
+""
 ## 💡 Ejemplo de Referencia (Planetario — solo instructor)
 
 El archivo `starter/script.js` contiene TODOs genéricos para cualquier dominio.

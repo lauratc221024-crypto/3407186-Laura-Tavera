@@ -1,107 +1,119 @@
 // ============================================
 // PROYECTO SEMANA 03: Calculadora de Dominio
-// ============================================
-// Adapta este archivo a tu dominio asignado.
-//
-// Ejemplos con dominios no asignables:
-// - Planetario    → calcular ingresos por función, capacidad disponible
-// - Acuario       → calcular costo de alimentación, volumen total de tanques
-// - Museo         → calcular valor de exhibición, costo de entrada
-// - Zoológico     → calcular gasto diario por especie, total de visitantes
-// - Observatorio  → calcular duración total de eventos, aforo restante
+// Sistema de Trazabilidad Agrícola
 // ============================================
 
 // ============================================
 // SECCIÓN 1: Datos del dominio
 // ============================================
 
-// TODO: Define las constantes base de tu dominio
-// Ejemplos con dominios no asignables:
-//   Planetario:   TICKET_PRICE = 12_000, MAX_CAPACITY = 45
-//   Acuario:      DAILY_FEEDING_KG = 150, ENTRY_PRICE = 35_000
-//   Museo:        ADULT_TICKET = 20_000, GUIDED_TOUR = 15_000
-//   Zoológico:    FOOD_COST_PER_DAY = 500_000, MAX_VISITORS = 800
-//   Observatorio: SESSION_DURATION = 90, TICKET_PRICE = 18_000
+// Constantes del sistema agrícola
+// Precio por kilo del producto
+const PRICE_PER_KG = 3_000;
 
-// const EXAMPLE_CONSTANT = 0; // TODO: Reemplazar con tus constantes
+// Producción del lote en kilos
+const LOT_KG = 1_000;
+
+// Capacidad máxima del almacén
+const MAX_STORAGE = 5_000;
+
 
 // ============================================
 // SECCIÓN 2: Operaciones aritméticas
 // ============================================
 console.log("=== Operaciones básicas ===");
 
-// TODO: Calcula totales, subtotales o valores clave de tu dominio
-// Usa: +, -, *, /, %, **
-// Etiqueta cada resultado con console.log()
+// Calcular el valor total del lote cosechado
+const totalValue = PRICE_PER_KG * LOT_KG;
+console.log("Valor total del lote:", totalValue);
 
-// Ejemplo con dominio Planetario (NO copiar):
-// const ticketPrice = 12_000;
-// const attendees = 38;
-// const totalRevenue = ticketPrice * attendees;
-// console.log("Ingresos función:", totalRevenue);
-// const remainingSeats = 45 - attendees;
-// console.log("Asientos disponibles:", remainingSeats);
+// Calcular espacio restante en el almacén
+const remainingStorage = MAX_STORAGE - LOT_KG;
+console.log("Espacio restante:", remainingStorage);
+
+// Calcular promedio de producción en 5 parcelas
+const averageProduction = LOT_KG / 5;
+console.log("Promedio por parcela:", averageProduction);
+
+// Calcular kilos sobrantes al empacar en cajas de 200 kg
+const remainingKg = LOT_KG % 200;
+console.log("Kilos sobrantes:", remainingKg);
 
 console.log("");
+
 
 // ============================================
 // SECCIÓN 3: Asignación compuesta
 // ============================================
 console.log("=== Asignación compuesta ===");
 
-// TODO: Usa +=, -=, *=, /= para actualizar valores acumulados
-// Muestra el valor antes y después de cada operación
+// Ingresos acumulados por venta de lotes
+let totalRevenue = 0;
 
-// Ejemplo (NO copiar):
-// let runningTotal = 0;
-// runningTotal += 25_000;
-// console.log("Tras primer item:", runningTotal);
-// runningTotal += 18_000;
-// console.log("Tras segundo item:", runningTotal);
-// runningTotal *= 0.90; // descuento del 10%
-// console.log("Con descuento:", runningTotal);
+totalRevenue += 3_000_000;
+console.log("Ingreso después del primer lote:", totalRevenue);
+
+totalRevenue += 2_500_000;
+console.log("Ingreso después del segundo lote:", totalRevenue);
+
+// Aplicar descuento del 5%
+totalRevenue *= 0.95;
+console.log("Ingreso con descuento:", totalRevenue);
 
 console.log("");
+
 
 // ============================================
 // SECCIÓN 4: Comparación estricta
 // ============================================
 console.log("=== Validaciones con === ===");
 
-// TODO: Valida condiciones usando === y operadores de orden
-// NUNCA uses == (penalización en la rúbrica)
+// Estado del lote en el sistema
+const lotStatus = "registrado";
 
-// Ejemplo (NO copiar):
-// const daysLate = 5;
-// const isOnTime = daysLate === 0;
-// console.log("¿Entregado a tiempo?", isOnTime);
-// const hasFine = daysLate > 0;
-// console.log("¿Tiene multa?", hasFine);
+// Verificar si el lote está registrado en el sistema
+const isRegistered = lotStatus === "registrado";
+console.log("¿Lote registrado?", isRegistered);
+
+// Verificar si la producción es mayor a 800 kg
+const highProduction = LOT_KG > 800;
+console.log("¿Producción alta?", highProduction);
 
 console.log("");
+
 
 // ============================================
 // SECCIÓN 5: Operadores lógicos
 // ============================================
 console.log("=== Condiciones lógicas ===");
 
-// TODO: Combina condiciones con &&, ||, !
-// Al menos una condición con && y una con ||
+// Condiciones del lote
+const hasCertification = true;
+const passedInspection = true;
 
-// Ejemplo (NO copiar):
-// const isMember = true;
-// const purchaseAmount = 150_000;
-// const qualifiesForDiscount = isMember && purchaseAmount >= 100_000;
-// console.log("¿Descuento aplicable?", qualifiesForDiscount);
+// Puede exportarse si tiene certificación y pasó inspección
+const canExport = hasCertification && passedInspection;
+console.log("¿Puede exportarse?", canExport);
+
+// Puede venderse si cumple al menos una condición
+const canSell = hasCertification || passedInspection;
+console.log("¿Puede venderse?", canSell);
+
+// Negación
+const noCertification = !hasCertification;
+console.log("¿No tiene certificación?", noCertification);
 
 console.log("");
+
 
 // ============================================
 // SECCIÓN 6: Resumen final
 // ============================================
 console.log("=== Resumen ===");
 
-// TODO: Muestra un resumen con los valores más importantes
-// calculados en las secciones anteriores
+console.log("Producción del lote:", LOT_KG);
+console.log("Valor del lote:", totalValue);
+console.log("Ingresos acumulados:", totalRevenue);
+console.log("Espacio disponible:", remainingStorage);
 
 console.log("");

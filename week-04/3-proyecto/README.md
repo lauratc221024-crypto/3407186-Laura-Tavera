@@ -6,7 +6,7 @@
 
 ## 📋 Tu Dominio Asignado
 
-**Dominio**: [El instructor te asignará tu dominio al inicio del trimestre]
+**Dominio**: [sistema de trazabilidad agricola]
 
 > ⚠️ **POLÍTICA ANTICOPIA**: Cada aprendiz tiene un **dominio único**. Tu código debe reflejar tu dominio específico. Una implementación copiada o no adaptada resulta en calificación de cero.
 
@@ -65,6 +65,30 @@ Disponible:  Sí
 📢 Nueva exhibición disponible: Sistema Solar en 3D (EXH-001)
 =============================================
 ```
+""
+=============================================
+  SISTEMA DE TRAZABILIDAD AGRÍCOLA — FICHA DE ENTIDAD
+=============================================
+Nombre:      LOTE DE MAIZ AMARILLO
+Categoría:   Cultivo agrícola
+Código:      LOT-001
+Prefijo:     LOT
+Valor:       1500
+Estado:      Activo
+
+---------------------------------------------
+Descripción:
+Lote agrícola registrado en el sistema de trazabilidad para control de producción y calidad.
+=============================================
+
+--- Validaciones ---
+¿Código empieza con 'LOT'?: true
+¿Descripción contiene 'trazabilidad'?: true
+¿Código termina con '001'?: true
+
+--- Notificación ---
+📢 Nuevo lote registrado: lote de maiz amarillo (LOT-001)
+""
 
 ---
 

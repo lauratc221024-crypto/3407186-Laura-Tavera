@@ -1,48 +1,30 @@
 // ============================================
 // PROYECTO SEMANA 04: Generador de Mensajes
 // ============================================
-//
-// 🎯 OBJETIVO: Construir un generador de mensajes
-//    en consola usando métodos de string y
-//    template literals.
-//
-// 📋 TU DOMINIO: Adapta cada TODO al dominio
-//    que te fue asignado por el instructor.
-//
-// ⚠️  POLÍTICA ANTICOPIA: Tu implementación debe
-//    ser única y coherente con tu dominio.
-//    Usa dominios no asignables como referencia
-//    conceptual, pero NO copies valores.
-//
-// ============================================
 
 // ============================================
 // SECCIÓN 1: Datos del dominio
 // ============================================
 
-// TODO: Define el nombre de tu dominio
-const DOMAIN_NAME = "Mi Dominio";
+// Nombre del dominio
+const DOMAIN_NAME = "Sistema de Trazabilidad Agrícola";
 
-// TODO: Define el nombre de la entidad principal
-// Inclúyelo con espacios y mayúsculas/minúsculas
-// para poder aplicar transformaciones después
-const rawEntityName = "  nombre de la entidad  ";
+// Nombre de la entidad principal
+const rawEntityName = "  lote de maiz amarillo  ";
 
-// TODO: Define una categoría o tipo (string)
-const entityCategory = "Categoría del elemento";
+// Categoría o tipo
+const entityCategory = "Cultivo agrícola";
 
-// TODO: Define un código identificador (string)
-// Elige un prefijo coherente con tu dominio
-const entityCode = "COD-001";
+// Código identificador
+const entityCode = "LOT-001";
 
-// TODO: Define una descripción corta (string)
-// Debe contener varias palabras para usar includes/slice
-const entityDescription = "Descripción interesante de la entidad del dominio asignado.";
+// Descripción corta
+const entityDescription = "Lote agrícola registrado en el sistema de trazabilidad para control de producción y calidad.";
 
-// TODO: Define un dato numérico relevante (number)
-const mainValue = 0;
+// Dato numérico relevante
+const mainValue = 1500;
 
-// TODO: Define un estado booleano
+// Estado booleano
 const isActive = true;
 
 
@@ -50,17 +32,16 @@ const isActive = true;
 // SECCIÓN 2: Transformaciones de string
 // ============================================
 
-// TODO: Limpia el nombre con trim()
+// Limpiar el nombre
 const entityName = rawEntityName.trim();
 
-// TODO: Obtén el nombre en mayúsculas para el encabezado
+// Nombre en mayúsculas
 const entityNameUpper = entityName.toUpperCase();
 
-// TODO: Obtén el nombre en minúsculas para el código
+// Nombre en minúsculas
 const entityNameLower = entityName.toLowerCase();
 
-// TODO: Extrae las primeras letras del código con slice()
-// para usarlas como prefijo de referencia
+// Prefijo del código
 const codePrefix = entityCode.slice(0, 3);
 
 
@@ -68,16 +49,13 @@ const codePrefix = entityCode.slice(0, 3);
 // SECCIÓN 3: Validaciones con búsqueda
 // ============================================
 
-// TODO: Verifica si el código empieza con el prefijo correcto
-// Usa startsWith() con el prefijo que definiste
+// Verificar si el código empieza con el prefijo
 const hasValidPrefix = entityCode.startsWith(codePrefix);
 
-// TODO: Verifica si la descripción contiene una palabra clave
-// Usa includes() con una palabra importante de tu dominio
-const descriptionIsRelevant = entityDescription.includes("dominio");
+// Verificar si la descripción contiene una palabra clave
+const descriptionIsRelevant = entityDescription.includes("trazabilidad");
 
-// TODO: Verifica si el código termina con los dígitos
-// Usa endsWith() con algo coherente de tu dominio
+// Verificar si el código termina con los dígitos
 const hasValidSuffix = entityCode.endsWith("001");
 
 
@@ -88,8 +66,6 @@ const hasValidSuffix = entityCode.endsWith("001");
 const separator = "=".repeat(45);
 const subSeparator = "-".repeat(45);
 
-// TODO: Construye la ficha multilínea usando template literals
-// Usa TODAS las variables transformadas arriba
 const mainCard = `
 ${separator}
   ${DOMAIN_NAME.toUpperCase()} — FICHA DE ENTIDAD
@@ -115,10 +91,11 @@ console.log(mainCard);
 // ============================================
 
 console.log("--- Validaciones ---");
-// TODO: Muestra los resultados de las validaciones con template literals
+
 console.log(`¿Código empieza con '${codePrefix}'?: ${hasValidPrefix}`);
-console.log(`¿Descripción contiene 'dominio'?: ${descriptionIsRelevant}`);
+console.log(`¿Descripción contiene 'trazabilidad'?: ${descriptionIsRelevant}`);
 console.log(`¿Código termina con '001'?: ${hasValidSuffix}`);
+
 console.log("");
 
 
@@ -128,8 +105,7 @@ console.log("");
 
 console.log("--- Notificación ---");
 
-// TODO: Construye un mensaje corto de una línea
-// Usa template literal con el nombre limpio y el código
-const notification = `📢 Nuevo elemento disponible: ${entityName} (${entityCode})`;
+const notification = `📢 Nuevo lote registrado: ${entityName} (${entityCode})`;
+
 console.log(notification);
 console.log("");
