@@ -1,6 +1,6 @@
 // ============================================
 // PROYECTO SEMANA 07 — Librería de Funciones
-// Dominio: [Tu dominio asignado]
+// Dominio: Sistema de Trazabilidad Agrícola
 // ============================================
 
 // NOTA PARA EL APRENDIZ:
@@ -23,62 +23,30 @@
 // ============================================
 
 // TODO: Define las constantes globales de tu dominio
-// Ejemplo: const TAX_RATE = 0.19;
-//          const CURRENCY = "USD";
-//          const DOMAIN_NAME = "Mi Dominio";
-const DOMAIN_NAME = "Mi Dominio";
-const VALUE_LABEL = "valor"; // Ej: "precio", "cantidad", "duración"
+const DOMAIN_NAME = "Trazabilidad Agrícola";
+const VALUE_LABEL = "costo"; // Ej: "precio", "cantidad", "duración"
 
 // TODO: Define un array con al menos 5 elementos de tu dominio.
-// Cada elemento debe ser un objeto con propiedades relevantes.
-// Ejemplo (Biblioteca):
-// const items = [
-//   { id: 1, name: "El Quijote",  category: "clásico",    value: 15,  active: true },
-//   { id: 2, name: "1984",        category: "distopía",   value: 12,  active: true },
-//   ...
-// ];
 const items = [
-  // TODO: Agrega tus elementos aquí
+  { id: 1, name: "Café", category: "Grano", value: 5000, active: true },
+  { id: 2, name: "Papa", category: "Tubérculo", value: 2000, active: true },
+  { id: 3, name: "Tomate", category: "Hortaliza", value: 3000, active: false },
+  { id: 4, name: "Banano", category: "Fruta", value: 2500, active: true },
+  { id: 5, name: "Maíz", category: "Cereal", value: 1800, active: false }
 ];
 
 // ============================================
 // SECCIÓN 2: Función de formato
 // ============================================
 
-// TODO: Implementa una arrow function que reciba un elemento
-// y devuelva un string formateado para mostrar en pantalla.
-// Debe usar template literals y al menos 2 propiedades del elemento.
-//
-// Ejemplo (Biblioteca):
-// const formatItem = (book) =>
-//   `📚 ${book.name} [${book.category}] — $${book.value}`;
-//
-// Ejemplo (Farmacia):
-// const formatItem = (medicine) =>
-//   `💊 ${medicine.name} — Stock: ${medicine.stock} — $${medicine.price}`;
-
 const formatItem = (item) => {
   // TODO: Implementar usando template literals
-  // 1. Incluir el nombre del elemento
-  // 2. Incluir la categoría o tipo
-  // 3. Incluir el valor numérico relevante
-  return `${item.name}`; // TODO: Expandir este template
+  return `🌱 ${item.name} [${item.category}] — $${item.value}`;
 };
 
 // ============================================
 // SECCIÓN 3: Función de cálculo (pura)
 // ============================================
-
-// TODO: Implementa una función pura que calcule algún valor relevante
-// del dominio a partir de parámetros numéricos.
-// Debe ser una función pura: mismo input → siempre mismo output.
-//
-// Ejemplo (Biblioteca): calcular multa por días de retraso
-// const calculateValue = (baseValue, factor) => baseValue * factor;
-//
-// Ejemplo (Farmacia): calcular total de compra con descuento
-// const calculateValue = (price, quantity, discountPct = 0) =>
-//   +(price * quantity * (1 - discountPct / 100)).toFixed(2);
 
 const calculateValue = (baseValue, factor = 1) => {
   // TODO: Implementar el cálculo relevante para tu dominio
@@ -89,18 +57,6 @@ const calculateValue = (baseValue, factor = 1) => {
 // SECCIÓN 4: Función de validación
 // ============================================
 
-// TODO: Implementa una función que reciba un elemento y devuelva
-// true o false según una regla del dominio.
-//
-// Ejemplo (Biblioteca): verificar si el libro está disponible
-// const isValid = (book) => book.available === true;
-//
-// Ejemplo (Farmacia): verificar si hay suficiente stock
-// const isValid = (medicine) => medicine.stock > 0;
-//
-// Ejemplo (Gimnasio): verificar si el miembro está activo
-// const isValid = (member) => member.active === true;
-
 const isValid = (item) => {
   // TODO: Implementar la condición de validez de tu dominio
   return item.active === true;
@@ -110,18 +66,7 @@ const isValid = (item) => {
 // SECCIÓN 5: Función con parámetro por defecto
 // ============================================
 
-// TODO: Implementa una función que use al menos un parámetro
-// por defecto significativo para tu dominio.
-//
-// Ejemplo (Biblioteca): crear un registro con valores por defecto
-// const createRecord = (name, category = "general", available = true) =>
-//   ({ name, category, available });
-//
-// Ejemplo (Farmacia): formatear precio con moneda por defecto
-// const formatPrice = (price, currency = "USD", showTax = false) =>
-//   showTax ? `${currency} ${(price * 1.19).toFixed(2)}` : `${currency} ${price.toFixed(2)}`;
-
-const formatWithDefault = (value, label = VALUE_LABEL, currency = "") => {
+const formatWithDefault = (value, label = VALUE_LABEL, currency = "COP") => {
   // TODO: Implementar con parámetros por defecto relevantes al dominio
   return currency
     ? `${label}: ${currency} ${value}`
@@ -131,14 +76,6 @@ const formatWithDefault = (value, label = VALUE_LABEL, currency = "") => {
 // ============================================
 // SECCIÓN 6: Reporte usando las funciones
 // ============================================
-
-// TODO: Genera un reporte completo usando las funciones anteriores.
-// Debe:
-// 1. Mostrar el título del dominio
-// 2. Recorrer items con for...of y mostrar cada uno con formatItem()
-// 3. Contar los elementos válidos con isValid()
-// 4. Calcular el total o promedio con calculateValue()
-// 5. Mostrar el resumen final con formatWithDefault()
 
 console.log(`\n${"═".repeat(45)}`);
 console.log(`   REPORTE — ${DOMAIN_NAME}`);
